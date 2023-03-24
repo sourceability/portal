@@ -160,6 +160,39 @@ bin/portal spell.yaml '[{"hello":["worlds"]},{"hello":[]}]'
 
 Use `-v`, `-vv`, `-vvv` to print more information like the prompts or the OpenAI API requests/responses.
 
+## ApiPlatformSpell
+
+The `ApiPlatformSpell` uses [API Platform][api-platform]'s to generate the JSON Schema but also to deserialize the JSON result into your own types.
+
+You're left with `getExamples` and `getPrompt` to implement:
+```php
+use Sourceability\Portal\Spell\ApiPlatformSpell as BaseSpell;
+
+/**
+ * @implements ApiPlatformSpell<string, Part>
+ */
+class PartListSpell extends ApiPlatformSpell
+{
+    public function __construct(SchemaFactoryInterface $schemaFactory, DenormalizerInterface $denormalizer)
+    {
+        parent::__construct($schemaFactory, $denormalizer, Part::class);
+    }
+
+    public function getExamples(): array
+    {
+        return [
+            'smartwatch',
+            'bookshelf speaker',
+        ];
+    }
+
+    public function getPrompt($input): string
+    {
+        return sprintf('A list of parts to build a %s.', $input);
+    }
+}
+```
+
 ## Examples
 
 See [./examples/](./examples).
@@ -169,3 +202,4 @@ See [./examples/](./examples).
 [json_schema_examples]: https://www.learnjsonschema.com/2020-12/meta-data/examples/
 [blog_gpt_json_schema]: https://blog.humphd.org/pouring-language-through-shape/
 [Spell.php]: src/Spell/Spell.php
+[api-platform]: https://api-platform.com
