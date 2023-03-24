@@ -1,5 +1,9 @@
 # sourceability/portal
 
+<p align="center">
+<img src="https://user-images.githubusercontent.com/611271/227591267-815bc626-5a78-4332-9129-11b341b6d4ae.png" width="150" />
+</p>
+
 A CLI and PHP Library that helps getting structured data out from GPT.
 
 Given a [JSON Schema][json_schema], GPT is [perfectly capable of outputting JSON that conforms to the schema][blog_gpt_json_schema].
