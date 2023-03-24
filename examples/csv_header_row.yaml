@@ -1,0 +1,30 @@
+schema:
+    properties:
+        headerRow:
+            type: integer
+            min: 0
+            description: Which row are the headers located at?
+examples:
+    - data:
+       - ['','','','']
+       - ['','','','']
+       - ['','Name','Price','Description']
+       - ['','Adrien','25','Wow']
+       - ['','John','13','Amazing']
+    - data:
+       - ['Date','','Day','Year']
+       - ['','','','']
+       - ['','','','']
+       - ['','','','']
+       - ['','','','']
+    - data:
+       - ['','','','']
+       - ['','','','']
+       - ['','','','']
+       - ['','','','']
+       - ['','Name','Age','']
+prompt: |
+    The spreadsheet is from a customer, and we are looking for row number where the headers are located.
+
+    Spreadsheet:
+    {{ data }}
