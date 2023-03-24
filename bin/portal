@@ -1,0 +1,68 @@
+#!/usr/bin/env php
+<?php
+
+require $_composer_autoload_path ?? __DIR__ . '/../vendor/autoload.php';
+
+use Http\Client\Common\Plugin\CachePlugin;
+use Http\Client\Common\Plugin\ErrorPlugin;
+use Http\Client\Common\Plugin\LoggerPlugin;
+use Http\Discovery\Psr17FactoryDiscovery;
+use Http\Message\Formatter\FullHttpMessageFormatter;
+use Sourceability\OpenAIClient\Client;
+use Sourceability\Portal\Command\CastCommand;
+use Sourceability\Portal\Completer\ChatGPTCompleter;
+use Sourceability\Portal\Portal;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Cache\Marshaller\DefaultMarshaller;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Logger\ConsoleLogger;
+use Symfony\Component\Console\Output\ConsoleOutput;
+
+$input = new ArgvInput();
+$output = new ConsoleOutput();
+
+$apiKey = getenv('OPENAI_API_KEY');
+if (mb_strlen($apiKey) < 1) {
+    $output->writeln('<error>You must configure the OPENAI_API_KEY environment variable.</error>');
+
+    exit(1);
+}
+
+$cachePlugins = [];
+if (! $input->hasParameterOption('--no-cache')) {
+    $cachePlugins = [
+        new CachePlugin(
+            new FilesystemAdapter('openai', 0, sys_get_temp_dir(), new DefaultMarshaller(false)),
+            Psr17FactoryDiscovery::findStreamFactory(),
+            [
+                'respect_cache_headers' => false,
+                'default_ttl' => 24 * 3600,
+                'methods' => ['HEAD', 'GET', 'POST'],
+            ]
+        ),
+    ];
+}
+
+$openaiClient = Client::create(
+    additionalPlugins: [
+        new LoggerPlugin(
+            new ConsoleLogger($output),
+            new FullHttpMessageFormatter(10000),
+        ),
+        ...$cachePlugins,
+        new ErrorPlugin(),
+    ],
+    apiKey: $apiKey
+);
+
+$portal = new Portal(
+    new ChatGPTCompleter($openaiClient)
+);
+
+$application = new Application();
+$application->getDefinition()->addOption(new InputOption('no-cache', null, null, 'Bypass OpenAI API cache.'));
+$application->add($castCommand = new CastCommand($portal));
+$application->setDefaultCommand($castCommand->getName(), true);
+$application->run($input, $output);

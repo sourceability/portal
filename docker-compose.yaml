@@ -1,0 +1,13 @@
+volumes:
+  tmp: ~
+
+services:
+  php:
+    build: .
+    environment:
+      - OPENAI_API_KEY
+    volumes:
+      - .:/usr/src/app:cached
+
+      # persist cache
+      - tmp:/tmp

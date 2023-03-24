@@ -1,0 +1,27 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Sourceability\\Portal\\ApiPlatformDemo\\": "."
+        }
+    },
+    "require": {
+        "api-platform/core": "^3.0",
+        "sourceability/portal": "@dev",
+        "symfony/string": "^6.0",
+        "phpdocumentor/reflection-docblock": "^5.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../",
+            "options": {
+                "symlink": true
+            }
+        }
+    ]
+}

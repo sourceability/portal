@@ -1,0 +1,28 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Sourceability\\Portal\\SwaggerDemo\\": "."
+        }
+    },
+    "require": {
+        "sourceability/portal": "@dev",
+        "zircote/swagger-php": "^4.7"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "require-dev": {
+        "symfony/var-dumper": "^6.0"
+    }
+}

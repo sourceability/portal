@@ -1,0 +1,20 @@
+{
+    "require": {
+        "sourceability/portal": "@dev",
+        "swaggest/json-schema": "^0.12.41"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../",
+            "options": {
+                "symlink": true
+            }
+        }
+    ]
+}

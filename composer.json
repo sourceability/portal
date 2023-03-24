@@ -1,0 +1,37 @@
+{
+    "name": "sourceability/portal",
+    "type": "library",
+    "require": {
+        "ext-json": "*",
+        "composer-runtime-api": "*",
+        "php-http/cache-plugin": "^1.0",
+        "php-http/logger-plugin": "^1.0",
+        "sourceability/openai-client": "^0.3.2",
+        "symfony/cache": "^6.0",
+        "symfony/console": "^6.0",
+        "symfony/http-client": "^6.0",
+        "nyholm/psr7": "^1.5",
+        "guzzlehttp/promises": "^1.5"
+    },
+    "require-dev": {
+        "api-platform/core": "^3.0",
+        "ergebnis/composer-normalize": "^2.30",
+        "phpstan/phpstan": "^1.10",
+        "rector/rector": "^0.15.21",
+        "symplify/easy-coding-standard": "^11.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sourceability\\Portal\\": "src/"
+        }
+    },
+    "bin": [
+        "bin/portal"
+    ],
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true,
+            "ergebnis/composer-normalize": true
+        }
+    }
+}

@@ -1,0 +1,36 @@
+schema:
+    properties:
+        mappedHeaders:
+            type: object
+            patternProperties:
+                '^.+':
+                    type: [string, null]
+                    description: The keys are the input headers, and the value is the mapped header. Null if there is no close match among the supported import headers.
+examples:
+    - supportedHeaders:
+          - 'MPN'
+          - 'Manufacturer'
+          - 'Price'
+          - 'Quantity'
+      headers:
+          - 'PN'
+          - 'Prix'
+          - 'Fabricant'
+          - 'Risques'
+          - 'Notes'
+    - supportedHeaders:
+          - 'name'
+          - 'content'
+          - 'categories'
+      headers:
+          - 'title'
+          - 'description'
+prompt: |
+    Map headers from an input CSV file, to the supported headers.
+
+    Example supported headers: ["MPN"]
+    Example input headers: ["Part Number","Note","Age"]
+    Example Output: {"mappedHeaders":{"Part Number":"MPN","Note":null,"Age":null}}
+
+    Supported headers: {{ supportedHeaders }}
+    Input headers: {{ headers }}
