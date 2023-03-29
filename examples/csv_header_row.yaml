@@ -23,6 +23,12 @@ examples:
        - ['','','','']
        - ['','','','']
        - ['','Name','Age','']
+    - data:
+       - ['','','','']
+       - ['','','YEAR REPORT','']
+       - ['','','','']
+       - ['','','','']
+       - ['','Name','Age','']
 prompt: |
     The spreadsheet is from a customer, and we are looking for row number where the headers are located.
 
