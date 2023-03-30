@@ -6,11 +6,10 @@ namespace Sourceability\Portal\Command;
 
 use JsonException;
 use JsonSerializable;
-use ReflectionClass;
-use Sourceability\Portal\Exception;
+use Psr\Container\ContainerInterface;
+use Sourceability\Portal\Exception\Exception;
 use Sourceability\Portal\Portal;
 use Sourceability\Portal\Spell\Spell;
-use Sourceability\Portal\Spell\SpellFactory;
 use Sourceability\Portal\Spell\StaticSpell;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -27,7 +26,8 @@ use Symfony\Component\Yaml\Yaml;
 class CastCommand extends Command
 {
     public function __construct(
-        private readonly Portal $portal
+        private readonly Portal $portal,
+        private readonly ?ContainerInterface $spellLocator = null
     ) {
         parent::__construct(null);
     }
@@ -73,22 +73,21 @@ class CastCommand extends Command
         }
 
         if ($spell === null) {
-            if (! is_string($spellName)
-                || ! class_exists($spellName)
-                || ! (new ReflectionClass($spellName))->implementsInterface(Spell::class)
+            if (is_string($spellName)
+                && $this->spellLocator !== null
+                && $this->spellLocator->has($spellName)
             ) {
+                $spell = $this->spellLocator->get($spellName);
+            } elseif (is_string($spellName) && class_exists($spellName)) {
+                $spell = new $spellName();
+            }
+
+            if (! $spell instanceof Spell) {
                 $io->error(
                     sprintf('Spell must be a class that implements %s.', Spell::class)
                 );
 
                 return 1;
-            }
-
-            if ((new ReflectionClass($spellName))->implementsInterface(SpellFactory::class)) {
-                /* @phpstan-ignore-next-line */
-                $spell = call_user_func([$spellName, 'create']);
-            } else {
-                $spell = new $spellName();
             }
 
             assert($spell instanceof Spell);
@@ -144,11 +143,17 @@ class CastCommand extends Command
 
             $io->title('Completion Results:');
 
-            if (count($castResult->transferValue) > 0) {
-                if (is_int(array_keys($castResult->transferValue)[0])) {
+            if ((is_countable($castResult->transferValue) ? count($castResult->transferValue) : 0) > 0) {
+                if (is_array($castResult->transferValue)
+                    && is_int(array_keys($castResult->transferValue)[0])
+                ) {
                     $table = new Table($consoleOutput);
                     $table->setStyle('box');
-                    $table->setHeaders(array_keys($schemaArray['properties']));
+
+                    $schemaProperties = $schemaArray['properties'] ?? $schemaArray['items']['properties'] ?? null;
+                    if (is_array($schemaProperties)) {
+                        $table->setHeaders(array_keys($schemaProperties));
+                    }
                     $table->setFooterTitle(sprintf('Total: %d', count($castResult->transferValue)));
 
                     $firstResult = true;
@@ -180,6 +185,9 @@ class CastCommand extends Command
                     $value = $castResult->transferValue;
                     $io->block(json_encode($value, \JSON_PRETTY_PRINT) ?: '', null, 'bg=gray', ' ', true);
                 }
+            } else {
+                $value = $castResult->transferValue;
+                $io->block(json_encode($value, \JSON_PRETTY_PRINT) ?: '', null, 'bg=gray', ' ', true);
             }
 
             if ($consoleOutput->isVeryVerbose()) {

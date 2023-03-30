@@ -19,6 +19,9 @@ use Sourceability\Portal\Command\CastCommand;
 use Sourceability\Portal\Completer\ChatGPTCompleter;
 use Sourceability\Portal\Completer\Completer;
 use Sourceability\Portal\Portal;
+use Sourceability\Portal\Spell\Spell;
+use Symfony\Component\DependencyInjection\Argument\ServiceLocatorArgument;
+use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
@@ -107,10 +110,19 @@ class SourceabilityPortalExtension extends ConfigurableExtension
 
         $container
             ->register(CastCommand::class, CastCommand::class)
-            ->setArguments([new Reference(Portal::class)])
+            ->setArguments([
+                new Reference(Portal::class),
+                new ServiceLocatorArgument(
+                    new TaggedIteratorArgument('sourceability_portal.spell', indexAttribute: 'short_name')
+                ),
+            ])
             ->addTag('console.command', [
                 'command' => 'portal:cast',
             ]);
+
+        $container
+            ->registerForAutoconfiguration(Spell::class)
+            ->addTag('sourceability_portal.spell');
     }
 
     private function serviceId(string $id): string

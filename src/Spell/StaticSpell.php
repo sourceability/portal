@@ -54,7 +54,7 @@ class StaticSpell implements Spell
         );
     }
 
-    public function transcribe(array $completionValue): array
+    public function transcribe(mixed $completionValue): mixed
     {
         return $completionValue;
     }

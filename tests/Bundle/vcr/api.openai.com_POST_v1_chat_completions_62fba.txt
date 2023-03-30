@@ -1,0 +1,21 @@
+HTTP/1.1 200 OK
+date: Thu, 30 Mar 2023 20:32:10 GMT
+content-type: application/json
+access-control-allow-origin: *
+cache-control: no-cache, must-revalidate
+openai-model: gpt-3.5-turbo-0301
+openai-organization: sourceability-1
+openai-processing-ms: 8231
+openai-version: 2020-10-01
+strict-transport-security: max-age=15724800; includeSubDomains
+x-ratelimit-limit-requests: 3500
+x-ratelimit-remaining-requests: 3499
+x-ratelimit-reset-requests: 17ms
+x-request-id: e71711140137648ba494f0ba47c7dc15
+cf-cache-status: DYNAMIC
+server: cloudflare
+cf-ray: 7b031ea02e3ad267-CDG
+content-encoding: gzip
+alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+
+{"id":"chatcmpl-6ztEAiXrUTGGiNNqxu2mDBoQh32XF","object":"chat.completion","created":1680208322,"model":"gpt-3.5-turbo-0301","usage":{"prompt_tokens":1388,"completion_tokens":265,"total_tokens":1653},"choices":[{"message":{"role":"assistant","content":"[{\"context\":{\"path\":\"app/Http/Controllers/Rule/SelectController.php\",\"lineNumber\":167},\"comment\":\"I see you're setting refresh triggers to false. I guess you could say they're... not so fresh anymore.\",\"emoji\":\"\\ud83e\\udd2f\"},{\"context\":\"commit_message\",\"comment\":\"This patch is rule-tastic! \\ud83c\\udf89\",\"emoji\":\"\\ud83c\\udf89\"},{\"context\":{\"path\":\"app/TransactionRules/Engine/SearchRuleEngine.php\",\"lineNumber\":57},\"comment\":\"I'm always refreshed when I see a new trigger. But I guess you're not. \\ud83d\\ude1e\",\"emoji\":\"\\ud83e\\udd14\"},{\"context\":{\"path\":\"app/TransactionRules/Engine/SearchRuleEngine.php\",\"lineNumber\":61},\"comment\":\"I guess you could say that you're... trigger shy. \\ud83d\\ude09\",\"emoji\":\"\\ud83d\\udc4d\"},{\"context\":{\"path\":\"app/TransactionRules/Engine/SearchRuleEngine.php\",\"lineNumber\":68},\"comment\":\"I'm sensing some tension between you and the triggers. Maybe you need some trigger therapy? \\ud83d\\udcaf\",\"emoji\":\"\\ud83d\\udcaf\"}]"},"finish_reason":"stop","index":0}]}

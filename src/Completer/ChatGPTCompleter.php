@@ -8,7 +8,7 @@ use Sourceability\OpenAIClient\Client;
 use Sourceability\OpenAIClient\Generated\Model\ChatCompletionRequestMessage;
 use Sourceability\OpenAIClient\Generated\Model\CreateChatCompletionRequest;
 use Sourceability\OpenAIClient\Generated\Model\CreateChatCompletionResponse;
-use Sourceability\Portal\Exception;
+use Sourceability\Portal\Exception\Exception;
 
 class ChatGPTCompleter implements Completer
 {

@@ -62,6 +62,9 @@ sourceability_portal:
     openai_api_key: '%my_openai_api_key%'
 ```
 
+Spells that are services and tagged with `sourceability_portal.spell` can be invoked with the cast command.
+If your service is autoconfigured, the tag will be automatically added.
+
 ## Static YAML
 
 You can invoke portal with the path to a `.yaml` with the following format:

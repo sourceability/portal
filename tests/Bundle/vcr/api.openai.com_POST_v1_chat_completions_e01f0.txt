@@ -1,0 +1,21 @@
+HTTP/1.1 200 OK
+date: Thu, 30 Mar 2023 20:53:21 GMT
+content-type: application/json
+access-control-allow-origin: *
+cache-control: no-cache, must-revalidate
+openai-model: gpt-3.5-turbo-0301
+openai-organization: sourceability-1
+openai-processing-ms: 767
+openai-version: 2020-10-01
+strict-transport-security: max-age=15724800; includeSubDomains
+x-ratelimit-limit-requests: 3500
+x-ratelimit-remaining-requests: 3499
+x-ratelimit-reset-requests: 17ms
+x-request-id: d952c2751e79bb418e7d3836a9b3eb72
+cf-cache-status: DYNAMIC
+server: cloudflare
+cf-ray: 7b033dd16d822a4f-CDG
+content-encoding: gzip
+alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+
+{"id":"chatcmpl-6ztYmV4C537dHlCPDBoHfYa3i4o13","object":"chat.completion","created":1680209600,"model":"gpt-3.5-turbo-0301","usage":{"prompt_tokens":95,"completion_tokens":21,"total_tokens":116},"choices":[{"message":{"role":"assistant","content":"\"Why did the capacitor break up with the diode? Because it couldn't resist its forward bias!\""},"finish_reason":"stop","index":0}]}

@@ -1,0 +1,21 @@
+HTTP/1.1 200 OK
+date: Thu, 30 Mar 2023 20:36:53 GMT
+content-type: application/json
+access-control-allow-origin: *
+cache-control: no-cache, must-revalidate
+openai-model: gpt-3.5-turbo-0301
+openai-organization: sourceability-1
+openai-processing-ms: 1048
+openai-version: 2020-10-01
+strict-transport-security: max-age=15724800; includeSubDomains
+x-ratelimit-limit-requests: 3500
+x-ratelimit-remaining-requests: 3499
+x-ratelimit-reset-requests: 17ms
+x-request-id: 9ac2f7b0c1282a6c286bcac26e5939c6
+cf-cache-status: DYNAMIC
+server: cloudflare
+cf-ray: 7b0325b23c9602e2-CDG
+content-encoding: gzip
+alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+
+{"id":"chatcmpl-6ztIqgxRNvDCUWPUPjfHd5caQVinl","object":"chat.completion","created":1680208612,"model":"gpt-3.5-turbo-0301","usage":{"prompt_tokens":219,"completion_tokens":29,"total_tokens":248},"choices":[{"message":{"role":"assistant","content":"{\"mappedHeaders\":{\"PN\":\"MPN\",\"Prix\":\"Price\",\"Fabricant\":\"Manufacturer\",\"Risques\":null,\"Notes\":null}}"},"finish_reason":"stop","index":0}]}

@@ -1,21 +1,21 @@
 HTTP/1.1 200 OK
-date: Thu, 30 Mar 2023 14:19:53 GMT
+date: Thu, 30 Mar 2023 20:36:54 GMT
 content-type: application/json
 access-control-allow-origin: *
 cache-control: no-cache, must-revalidate
 openai-model: gpt-3.5-turbo-0301
 openai-organization: sourceability-1
-openai-processing-ms: 850
+openai-processing-ms: 790
 openai-version: 2020-10-01
 strict-transport-security: max-age=15724800; includeSubDomains
 x-ratelimit-limit-requests: 3500
 x-ratelimit-remaining-requests: 3499
 x-ratelimit-reset-requests: 17ms
-x-request-id: 2e1c62cd34f1f93dfdf3b8125fbf12ea
+x-request-id: 4fc9385fcd3f66c08708502ab5025b61
 cf-cache-status: DYNAMIC
 server: cloudflare
-cf-ray: 7b00fd751dde2a20-CDG
+cf-ray: 7b0325b9fb6c02e2-CDG
 content-encoding: gzip
 alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
 
-{"id":"chatcmpl-6znQ0wgor9B10moER0XpRKp37sfvj","object":"chat.completion","created":1680185992,"model":"gpt-3.5-turbo-0301","usage":{"prompt_tokens":193,"completion_tokens":12,"total_tokens":205},"choices":[{"message":{"role":"assistant","content":"{\"mappedHeaders\":{\"title\":\"name\",\"description\":\"content\"}}"},"finish_reason":"stop","index":0}]}
+{"id":"chatcmpl-6ztIrJeV0kvFNnNoOqJiHhygxuhKY","object":"chat.completion","created":1680208613,"model":"gpt-3.5-turbo-0301","usage":{"prompt_tokens":206,"completion_tokens":16,"total_tokens":222},"choices":[{"message":{"role":"assistant","content":"{\"mappedHeaders\":{\"title\":\"name\",\"description\":\"content\",\"categories\":null}}"},"finish_reason":"stop","index":0}]}

@@ -10,14 +10,13 @@ namespace Sourceability\Portal\Result;
 class CastResult
 {
     /**
-     * @param array<TOutput> $value
-     * @param array<mixed> $transferValue
+     * @param TOutput $value
      */
     public function __construct(
         public readonly string $prompt,
         public readonly string $completion,
-        public readonly array $value,
-        public readonly array $transferValue
+        public readonly mixed $value,
+        public readonly mixed $transferValue
     ) {
     }
 }

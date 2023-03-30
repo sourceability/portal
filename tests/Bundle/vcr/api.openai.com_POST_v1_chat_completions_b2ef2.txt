@@ -1,0 +1,21 @@
+HTTP/1.1 200 OK
+date: Thu, 30 Mar 2023 20:46:08 GMT
+content-type: application/json
+access-control-allow-origin: *
+cache-control: no-cache, must-revalidate
+openai-model: gpt-3.5-turbo-0301
+openai-organization: sourceability-1
+openai-processing-ms: 1064
+openai-version: 2020-10-01
+strict-transport-security: max-age=15724800; includeSubDomains
+x-ratelimit-limit-requests: 3500
+x-ratelimit-remaining-requests: 3499
+x-ratelimit-reset-requests: 17ms
+x-request-id: 066d5fc1fc7556854b9c2ed6c3188a4d
+cf-cache-status: DYNAMIC
+server: cloudflare
+cf-ray: 7b03333d58d702aa-CDG
+content-encoding: gzip
+alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+
+{"id":"chatcmpl-6ztRndW6fHQY9GTuDEooZU8znyjof","object":"chat.completion","created":1680209167,"model":"gpt-3.5-turbo-0301","usage":{"prompt_tokens":96,"completion_tokens":26,"total_tokens":122},"choices":[{"message":{"role":"assistant","content":"\"I told my boss I could build a website with Symfony. He said 'What's that, a new type of pasta?'\""},"finish_reason":"stop","index":0}]}

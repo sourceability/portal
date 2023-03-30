@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sourceability\Portal;
 
 use Sourceability\Portal\Completer\Completer;
+use Sourceability\Portal\Exception\Exception;
 use Sourceability\Portal\Result\CastResult;
 use Sourceability\Portal\Result\TransferResult;
 use Sourceability\Portal\Spell\Spell;
@@ -49,7 +50,8 @@ class Portal
         }
 
         $fullPrompt = <<<PROMPT
-Write a JSON array of objects strictly matching the ${schemaType}.
+Write a JSON strictly matching the ${schemaType}.
+The JSON MUST be valid with proper escaping of special characters.
 Only output JSON, without any other text or markdown.
 Do not indent the JSON and use no whitespaces like for example `{"foo":"bar","a":1}`
 
@@ -57,7 +59,7 @@ Do not indent the JSON and use no whitespaces like for example `{"foo":"bar","a"
 ${promptSchema}
 ```
 
-The array should contain:
+Use the following instructions to fill the JSON:
 ${prompt}
 PROMPT;
 
@@ -69,12 +71,6 @@ PROMPT;
         }
 
         $completionValue = json_decode($completion, true, 512, JSON_THROW_ON_ERROR);
-
-        if (! is_array($completionValue)) {
-            throw new Exception(
-                sprintf('Completion value should be an array, but is instead "%s".', gettype($completionValue))
-            );
-        }
 
         return new TransferResult(
             $prompt,

@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 /**
  * @template TInput
  * @template TOutput of object
- * @implements Spell<TInput, TOutput>
+ * @implements Spell<TInput, array<TOutput>>
  */
 abstract class ApiPlatformSpell implements Spell
 {
@@ -34,7 +34,7 @@ abstract class ApiPlatformSpell implements Spell
         return json_encode($schema, JSON_THROW_ON_ERROR);
     }
 
-    public function transcribe(array $completionValue): array
+    public function transcribe(mixed $completionValue): array
     {
         $objects = $this->denormalizer->denormalize(
             $completionValue,

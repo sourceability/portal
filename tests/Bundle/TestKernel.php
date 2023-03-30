@@ -7,6 +7,9 @@ use Http\Client\Plugin\Vcr\Recorder\FilesystemRecorder;
 use Http\Client\Plugin\Vcr\RecordPlugin;
 use Http\Client\Plugin\Vcr\ReplayPlugin;
 use Sourceability\Portal\Bundle\SourceabilityPortalBundle;
+use Sourceability\Portal\Tests\Bundle\Command\CustomJokeCommand;
+use Sourceability\Portal\Tests\Bundle\Spells\CodeReviewSpell;
+use Sourceability\Portal\Tests\Bundle\Spells\JokeSpell;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -27,6 +30,8 @@ class TestKernel extends Kernel
 
     protected function configureContainer(ContainerConfigurator $container): void
     {
+        $container->parameters()->set('portal_dont_record_responses', true);
+
         $container->services()
             ->set(PathNamingStrategy::class, PathNamingStrategy::class)
 
@@ -43,8 +48,22 @@ class TestKernel extends Kernel
                 ->args([
                     new ReferenceConfigurator(PathNamingStrategy::class),
                     new ReferenceConfigurator(FilesystemRecorder::class),
-                    true, // set this to false in order to record new responses
+
+                    // To record responses:
+                    // PORTAL_RECORD_RESPONSES=1 phpunit ...
+                    '%env(default:portal_dont_record_responses:not:PORTAL_RECORD_RESPONSES)%'
                 ])
+
+            ->set(CodeReviewSpell::class, CodeReviewSpell::class)
+                ->autowire()
+                ->tag('sourceability_portal.spell', ['short_name' => 'CodeReview'])
+
+            ->set(JokeSpell::class, JokeSpell::class)
+                ->autoconfigure() // should auto tag
+
+            ->set(CustomJokeCommand::class, CustomJokeCommand::class)
+                ->autowire()
+                ->autoconfigure()
         ;
 
         $container->extension('sourceability_portal', [

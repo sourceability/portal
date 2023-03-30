@@ -28,8 +28,7 @@ interface Spell
     public function getPrompt($input): string;
 
     /**
-     * @param array<mixed> $completionValue
-     * @return array<TOutput>
+     * @return TOutput
      */
-    public function transcribe(array $completionValue): array;
+    public function transcribe(mixed $completionValue): mixed;
 }
