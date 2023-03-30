@@ -34,9 +34,14 @@ rector: vendor .env
 phpstan: vendor .env
 	$(EXEC_PHP) vendor/bin/phpstan
 
+.PHONY: phpunit
+## Run tests
+phpunit: vendor .env
+	$(EXEC_PHP) vendor/bin/phpunit
+
 .PHONY: pre-commit
 ## Useful targets to run before committing
-pre-commit: ecs rector phpstan
+pre-commit: ecs rector phpstan phpunit
 
 .env:
 	@read -sp 'Enter your OpenAI API Key (to save in gitignore .env): ' OPENAI_API_KEY ; \

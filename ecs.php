@@ -1,5 +1,6 @@
 <?php
 
+use PhpCsFixer\Fixer\Whitespace\MethodChainingIndentationFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 
@@ -28,5 +29,11 @@ return static function (ECSConfig $config): void {
         SetList::DOCBLOCK,
         SetList::NAMESPACES,
         SetList::SPACES,
+    ]);
+
+    $config->skip([
+        MethodChainingIndentationFixer::class => [
+            __DIR__ . '/src/Bundle/DependencyInjection/Configuration.php'
+        ],
     ]);
 };

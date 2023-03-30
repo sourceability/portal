@@ -43,6 +43,25 @@ bin/portal ./examples/csv_headers.yaml
 composer require sourceability/portal
 ```
 
+### Symfony Bundle
+
+Add the bundle to `config/bundles.php`:
+```php
+return [
+    // ...
+    Sourceability\Portal\Bundle\SourceabilityPortalBundle::class => ['all' => true],
+];
+```
+
+Then define the `OPENAI_API_KEY=sk-XXX` environment variable, for example in `.env.local`.
+
+You can also configure the bundle:
+```yaml
+# config/packages/sourceability_portal.yaml
+sourceability_portal:
+    openai_api_key: '%my_openai_api_key%'
+```
+
 ## Static YAML
 
 You can invoke portal with the path to a `.yaml` with the following format:
