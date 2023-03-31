@@ -28,7 +28,15 @@ Completion Results:
 }
 ```
 
-## Trying out
+## Installation
+
+```
+composer require sourceability/portal
+```
+
+### Trying out
+
+You can try out YAML spells with docker:
 
 ```
 git clone https://github.com/sourceability/portal.git
@@ -37,13 +45,9 @@ make php
 bin/portal ./examples/csv_headers.yaml
 ```
 
-## Installation
+### Symfony support
 
-```
-composer require sourceability/portal
-```
-
-### Symfony Bundle
+The library includes a Symfony bundle.
 
 Add the bundle to `config/bundles.php`:
 ```php
@@ -62,8 +66,21 @@ sourceability_portal:
     openai_api_key: '%my_openai_api_key%'
 ```
 
-Spells that are services and tagged with `sourceability_portal.spell` can be invoked with the cast command.
-If your service is autoconfigured, the tag will be automatically added.
+You can invoke your service spells using their FQCN with the cast command (don't forget the quotes):
+```
+bin/console portal:cast 'App\Portal\MySpell'
+```
+
+You can also define a short name with the `#[AutoconfigureSpell]` attribute:
+```php
+use Sourceability\Portal\Bundle\DependencyInjection\Attribute\AutoconfigureSpell;
+
+#[AutoconfigureSpell('Categorize')]
+class CategorizeSpell implements Spell
+{
+```
+
+And invoke the spell with `bin/console portal:cast Categorize`
 
 ## Static YAML
 

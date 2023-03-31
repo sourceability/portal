@@ -28,6 +28,10 @@ use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
 class SourceabilityPortalExtension extends ConfigurableExtension
 {
+    final public const TAG_SPELL = 'sourceability_portal.spell';
+
+    final public const TAG_SPELL_SHORT_NAME = 'short_name';
+
     protected function loadInternal(array $mergedConfig, ContainerBuilder $container)
     {
         $container
@@ -113,7 +117,7 @@ class SourceabilityPortalExtension extends ConfigurableExtension
             ->setArguments([
                 new Reference(Portal::class),
                 new ServiceLocatorArgument(
-                    new TaggedIteratorArgument('sourceability_portal.spell', indexAttribute: 'short_name')
+                    new TaggedIteratorArgument(self::TAG_SPELL, indexAttribute: self::TAG_SPELL_SHORT_NAME)
                 ),
             ])
             ->addTag('console.command', [
@@ -122,7 +126,7 @@ class SourceabilityPortalExtension extends ConfigurableExtension
 
         $container
             ->registerForAutoconfiguration(Spell::class)
-            ->addTag('sourceability_portal.spell');
+            ->addTag(self::TAG_SPELL);
     }
 
     private function serviceId(string $id): string
