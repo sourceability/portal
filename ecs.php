@@ -8,7 +8,7 @@ return static function (ECSConfig $config): void {
     $config->paths([
         __DIR__ . '/bin/portal',
         __DIR__ . '/src',
-        __DIR__ . '/examples/api-platform',
+        __DIR__ . '/examples/symfony-app/src',
         __DIR__ . '/examples/goldspecdigital-oooas',
         __DIR__ . '/examples/schema-org',
         __DIR__ . '/examples/swagger-php',

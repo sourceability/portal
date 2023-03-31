@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div>
+        Hello!
+    </div>
+
+    <div>
+        {{ form(form) }}
+    </div>
+
+    {% if summary is not null %}
+        <div>
+            <h1>
+                {{ summary.emoji }}
+            </h1>
+        </div>
+    {% endif %}
+{% endblock %}
