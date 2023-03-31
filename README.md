@@ -244,6 +244,20 @@ class PartListSpell extends ApiPlatformSpell
 }
 ```
 
+You can then use the `#[ApiProperty]` attribute to add context to your schema:
+```php
+use ApiPlatform\Metadata\ApiProperty;
+
+class Part
+{
+    #[ApiProperty(
+        description: 'Product description',
+        schema: ['maxLength' => 100],
+    )]
+    public string $description;
+}
+```
+
 ## Examples
 
 See [./examples/](./examples).
