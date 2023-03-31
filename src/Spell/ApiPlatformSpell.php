@@ -4,45 +4,93 @@ declare(strict_types=1);
 
 namespace Sourceability\Portal\Spell;
 
+use ApiPlatform\JsonSchema\Schema;
 use ApiPlatform\JsonSchema\SchemaFactoryInterface;
 use JsonSerializable;
-use ReflectionClass;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 /**
  * @template TInput
- * @template TOutput of object
- * @implements Spell<TInput, array<TOutput>>
+ * @template TOutput of object|array<object>
+ * @implements Spell<TInput, TOutput>
  */
 abstract class ApiPlatformSpell implements Spell
 {
-    /**
-     * @param class-string $class
-     */
     public function __construct(
         private readonly SchemaFactoryInterface $schemaFactory,
-        private readonly DenormalizerInterface $denormalizer,
-        private readonly string $class
+        private readonly DenormalizerInterface $denormalizer
     ) {
+    }
+
+    public function getExamples(): array
+    {
+        return []; // Make this method "optional" in subclasses
     }
 
     public function getSchema(): string|array|JsonSerializable
     {
-        $definition = (new ReflectionClass($this->class))->getShortName();
-        $schema = $this->schemaFactory->buildSchema($this->class)->getDefinitions()[$definition];
+        $schema = $this->schemaFactory->buildSchema(
+            $this->getClass(),
+            'json',
+            Schema::TYPE_INPUT,
+            null,
+            null,
+            null,
+            $this->isCollection()
+        );
 
-        return json_encode($schema, JSON_THROW_ON_ERROR);
+        $schema = json_decode(json_encode($schema, JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR);
+        assert(is_array($schema));
+
+        return $this->minifySchema($schema);
     }
 
-    public function transcribe(mixed $completionValue): array
+    public function transcribe(mixed $completionValue): mixed
     {
-        $objects = $this->denormalizer->denormalize(
+        $type = $this->getClass();
+        if ($this->isCollection()) {
+            $type .= '[]';
+        }
+
+        return $this->denormalizer->denormalize(
             $completionValue,
-            sprintf('%s[]', $this->class),
+            $type,
             'json'
         );
-        assert(is_array($objects));
+    }
 
-        return $objects;
+    /**
+     * @return class-string
+     */
+    abstract protected function getClass(): string;
+
+    protected function isCollection(): bool
+    {
+        return false;
+    }
+
+    /**
+     * @param array<mixed> $schema
+     * @return array<mixed>
+     */
+    private function minifySchema(array $schema): array
+    {
+        unset($schema['deprecated']);
+        if (array_key_exists('description', $schema)
+            && is_string($schema['description'])
+            && mb_strlen($schema['description']) < 1
+        ) {
+            unset($schema['description']);
+        }
+
+        foreach ($schema as &$value) {
+            if (! is_array($value)) {
+                continue;
+            }
+
+            $value = $this->minifySchema($value);
+        }
+
+        return $schema;
     }
 }

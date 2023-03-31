@@ -115,6 +115,14 @@ class CastCommand extends Command
             $inputs = $inputIsArray ? $input : [$input];
         } else {
             $inputs = $spell->getExamples();
+
+            if (count($inputs) < 1) {
+                $io->error(
+                    'The spell defines no examples. To cast a spell from the CLI, either defines examples or provide the input argument.'
+                );
+
+                return 1;
+            }
         }
 
         $firstInput = true;

@@ -201,22 +201,24 @@ Use `-v`, `-vv`, `-vvv` to print more information like the prompts or the OpenAI
 
 ## ApiPlatformSpell
 
-The `ApiPlatformSpell` uses [API Platform][api-platform]'s to generate the JSON Schema but also to deserialize the JSON result into your own types.
+The `ApiPlatformSpell` uses [API Platform][api-platform]'s to generate the JSON Schema but also to deserialize the JSON result.
 
-You're left with `getExamples` and `getPrompt` to implement:
+You must implement the following methods:
+- `getClass`
+- `getPrompt`
+
+The following are optional:
+- `isCollection` is false by default, you can return true instead
+- `getExamples` is empty by default, you can add your examples
+
 ```php
-use Sourceability\Portal\Spell\ApiPlatformSpell as BaseSpell;
+use Sourceability\Portal\Spell\ApiPlatformSpell;
 
 /**
- * @implements ApiPlatformSpell<string, Part>
+ * @extends ApiPlatformSpell<string, array<Part>>
  */
 class PartListSpell extends ApiPlatformSpell
 {
-    public function __construct(SchemaFactoryInterface $schemaFactory, DenormalizerInterface $denormalizer)
-    {
-        parent::__construct($schemaFactory, $denormalizer, Part::class);
-    }
-
     public function getExamples(): array
     {
         return [
@@ -228,6 +230,16 @@ class PartListSpell extends ApiPlatformSpell
     public function getPrompt($input): string
     {
         return sprintf('A list of parts to build a %s.', $input);
+    }
+    
+    protected function isCollection(): bool
+    {
+        return true;
+    }
+    
+    protected function getClass(): string
+    {
+        return Part::class;
     }
 }
 ```

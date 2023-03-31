@@ -5,3 +5,6 @@ parameters:
 
     excludePaths:
         - src/Bundle/DependencyInjection
+
+    ignoreErrors:
+        - '#ApiPlatformSpell::transcribe\(\) should return TOutput of array<object>\|object but returns mixed#'
