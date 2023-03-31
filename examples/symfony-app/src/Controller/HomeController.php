@@ -10,6 +10,7 @@ use Sourceability\Portal\Portal;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,20 +29,21 @@ class HomeController extends AbstractController
         if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
             $content = $form->get('content')->getData();
 
+            // is_string is required because SummarizeSpell TInput is string
             if (is_string($content)) {
-                $summary = $this->getSummary($portal, $summarizeSpell, $content);
+                $summary = $portal->cast($summarizeSpell, $content)->value;
             }
         }
 
+        // renderHome exists to make sure phpstan sees $summary as null|Summary
+        return $this->renderHome($form, $summary);
+    }
+
+    private function renderHome(FormInterface $form, ?Summary $summary): Response
+    {
         return $this->render('home.html.twig', [
             'form' => $form,
             'summary' => $summary,
         ]);
-    }
-
-    // Make sure phpstan validates generics
-    private function getSummary(Portal $portal, SummarizeSpell $spell, string $content): Summary
-    {
-        return $portal->cast($spell, $content)->value;
     }
 }
