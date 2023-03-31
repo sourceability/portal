@@ -204,6 +204,17 @@ $result = $portal->cast(
 actOnThe($result->value);
 ```
 
+## `$portal->transfer`
+
+If you don't need the Spell `getExamples` and `transcribe`, you can use `transfer`:
+```php
+$transferResult = $portal->transfer(
+    ['type' => 'string'], // output schema
+    'The prompt'
+);
+$transferResult->value; // the json decoded value
+```
+
 ## CLI
 
 You can pass your own JSON example to the portal cli:
