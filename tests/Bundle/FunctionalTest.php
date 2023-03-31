@@ -3,8 +3,8 @@
 namespace Sourceability\Portal\Tests\Bundle;
 
 use PHPUnit\Framework\TestCase;
-use Sourceability\Portal\Tests\Bundle\Spells\CodeReviewSpell;
-use Sourceability\Portal\Tests\Bundle\Spells\JokeSpell;
+use Sourceability\Portal\Tests\Bundle\SampleApp\Spells\JokeSpell;
+use Sourceability\Portal\Tests\Bundle\SampleApp\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 

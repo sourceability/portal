@@ -1,9 +1,9 @@
 <?php
 
-namespace Sourceability\Portal\Tests\Bundle\Spells;
+namespace Sourceability\Portal\Tests\Bundle\SampleApp\Spells;
 
 use Sourceability\Portal\Spell\Spell;
-use Sourceability\Portal\Tests\Bundle\Spells\DTO\ReviewComment;
+use Sourceability\Portal\Tests\Bundle\SampleApp\Spells\DTO\ReviewComment;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 /**

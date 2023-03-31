@@ -1,6 +1,6 @@
 <?php
 
-namespace Sourceability\Portal\Tests\Bundle\Spells;
+namespace Sourceability\Portal\Tests\Bundle\SampleApp\Spells;
 
 use Sourceability\Portal\Spell\Spell;
 

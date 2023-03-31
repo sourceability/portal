@@ -22,8 +22,8 @@
     </coverage>
 
     <php>
-        <server name="APP_CACHE_DIR" value="./tests/Bundle/var/cache"/>
-        <server name="APP_LOG_DIR" value="./tests/Bundle/var/log"/>
+        <server name="APP_CACHE_DIR" value="./tests/Bundle/SampleApp/var/cache"/>
+        <server name="APP_LOG_DIR" value="./tests/Bundle/SampleApp/var/log"/>
     </php>
 </phpunit>
 

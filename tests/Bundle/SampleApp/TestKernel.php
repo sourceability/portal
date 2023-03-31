@@ -1,15 +1,15 @@
 <?php
 
-namespace Sourceability\Portal\Tests\Bundle;
+namespace Sourceability\Portal\Tests\Bundle\SampleApp;
 
 use Http\Client\Plugin\Vcr\NamingStrategy\PathNamingStrategy;
 use Http\Client\Plugin\Vcr\Recorder\FilesystemRecorder;
 use Http\Client\Plugin\Vcr\RecordPlugin;
 use Http\Client\Plugin\Vcr\ReplayPlugin;
 use Sourceability\Portal\Bundle\SourceabilityPortalBundle;
-use Sourceability\Portal\Tests\Bundle\Command\CustomJokeCommand;
-use Sourceability\Portal\Tests\Bundle\Spells\CodeReviewSpell;
-use Sourceability\Portal\Tests\Bundle\Spells\JokeSpell;
+use Sourceability\Portal\Tests\Bundle\SampleApp\Command\CustomJokeCommand;
+use Sourceability\Portal\Tests\Bundle\SampleApp\Spells\CodeReviewSpell;
+use Sourceability\Portal\Tests\Bundle\SampleApp\Spells\JokeSpell;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;

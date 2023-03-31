@@ -2,4 +2,4 @@
 /composer.lock
 /.env
 /.phpunit.cache
-/tests/Bundle/var
+/tests/Bundle/SampleApp/var

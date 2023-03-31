@@ -1,9 +1,9 @@
 <?php
 
-namespace Sourceability\Portal\Tests\Bundle\Command;
+namespace Sourceability\Portal\Tests\Bundle\SampleApp\Command;
 
 use Sourceability\Portal\Portal;
-use Sourceability\Portal\Tests\Bundle\Spells\JokeSpell;
+use Sourceability\Portal\Tests\Bundle\SampleApp\Spells\JokeSpell;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

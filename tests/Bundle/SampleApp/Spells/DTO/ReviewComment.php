@@ -1,6 +1,6 @@
 <?php
 
-namespace Sourceability\Portal\Tests\Bundle\Spells\DTO;
+namespace Sourceability\Portal\Tests\Bundle\SampleApp\Spells\DTO;
 
 class ReviewComment
 {
