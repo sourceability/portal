@@ -181,7 +181,7 @@ class CastCommand extends Command
                                             return $value;
                                         }
 
-                                        return json_encode($value, \JSON_PRETTY_PRINT);
+                                        return json_encode($value, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE);
                                     },
                                     $value
                                 )
@@ -191,11 +191,11 @@ class CastCommand extends Command
                     $table->render();
                 } else {
                     $value = $castResult->transferValue;
-                    $io->block(json_encode($value, \JSON_PRETTY_PRINT) ?: '', null, 'bg=gray', ' ', true);
+                    $io->block(json_encode($value, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE) ?: '', null, 'bg=gray', ' ', true);
                 }
             } else {
                 $value = $castResult->transferValue;
-                $io->block(json_encode($value, \JSON_PRETTY_PRINT) ?: '', null, 'bg=gray', ' ', true);
+                $io->block(json_encode($value, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE) ?: '', null, 'bg=gray', ' ', true);
             }
 
             if ($consoleOutput->isVeryVerbose()) {
