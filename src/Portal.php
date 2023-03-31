@@ -50,17 +50,17 @@ class Portal
         }
 
         $fullPrompt = <<<PROMPT
-Write a JSON strictly matching the ${schemaType}.
+Write a JSON strictly matching the {$schemaType}.
 The JSON MUST be valid with proper escaping of special characters.
 Only output JSON, without any other text or markdown.
 Do not indent the JSON and use no whitespaces like for example `{"foo":"bar","a":1}`
 
-```${schemaType}
-${promptSchema}
+```{$schemaType}
+{$promptSchema}
 ```
 
 Use the following instructions to fill the JSON:
-${prompt}
+{$prompt}
 PROMPT;
 
         $completion = $this->completer->complete($fullPrompt);
