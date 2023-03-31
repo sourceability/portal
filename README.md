@@ -118,13 +118,7 @@ class MySpell implements Spell
 A spell is defined by its Input/Output types TInput and TOutput.
 So for example, a spell that accepts a number and returns an array of string, would use `Spell<int, string<string>>`.
 
-The `getExamples` method returns 0 or many inputs examples. This is very useful when iterating on a prompt.
-```php
-/**
- * @return array<TInput>
- */
-public function getExamples(): array;
-```
+### `getSchema`
 
 With the `getSchema` you return a JSON Schema:
 ```php
@@ -139,6 +133,7 @@ Make sure to leverage the [description][json_schema_description] and [examples][
 public function getSchema()
 {
     return [
+        'type' => 'object',
         'properties' => [
             'release' => [
                 'description' => 'The release reference/key.',
@@ -148,6 +143,12 @@ public function getSchema()
     ];
 }
 ```
+
+Note that you can also leverage libraries that define a DSL to build schemas:
+- [goldspecdigital/oooas][goldspecdigital/oooas] - see [examples/goldspecdigital-oooas](./examples/goldspecdigital-oooas)
+- [swaggest/json-schema][swaggest/php-json-schema] - see [examples/swaggest](./examples/swaggest)
+
+### `getPrompt`
 
 The `getPrompt` method is where you describe the desired behaviour:
 ```php
@@ -160,6 +161,7 @@ public function getPrompt($input): string
 }
 ```
 
+### `transcribe`
 Finally, you can transform the json decoded GPT output into your output type:
 ```php
 /**
@@ -171,6 +173,18 @@ public function transcribe(array $completionValue): array
     return array_map(fn ($item) => new Money($item), $completionValue);
 }
 ```
+
+### `getExamples`
+
+The `getExamples` method returns 0 or many inputs examples. This is very useful when iterating on a prompt.
+```php
+/**
+ * @return array<TInput>
+ */
+public function getExamples(): array;
+```
+
+### Casting
 
 Once you've done all that, you can cast try your spell examples:
 ```
@@ -268,3 +282,5 @@ See [./examples/](./examples).
 [blog_gpt_json_schema]: https://blog.humphd.org/pouring-language-through-shape/
 [Spell.php]: src/Spell/Spell.php
 [api-platform]: https://api-platform.com
+[goldspecdigital/oooas]: https://github.com/goldspecdigital/oooas
+[swaggest/php-json-schema]: https://github.com/swaggest/php-json-schema
