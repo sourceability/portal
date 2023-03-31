@@ -64,8 +64,8 @@ class CastCommand extends Command
 
                 $spell = new StaticSpell(
                     $parsedSpell['schema'],
+                    $parsedSpell['prompt'],
                     $parsedSpell['examples'] ?? [],
-                    $parsedSpell['prompt']
                 );
             } catch (ParseException) {
                 // ignore

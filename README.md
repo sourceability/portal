@@ -107,6 +107,30 @@ vendor/bin/portal my_spell.yaml
 
 The [Spell][Spell.php] interface is the main way to interact with this library.
 
+You can think of a Spell as a way to create a function whose "implementation" is a GPT prompt:
+```php
+$spell = new StaticSpell(
+    schema: [
+        'type' => 'array',
+        'items' => ['type' => 'string']
+    ],
+    prompt: 'Synonyms of {{ input }}'
+);
+
+/** @var callable(string): array<string> $generateSynonyms */
+$generateSynonyms = $portal->callableFromSpell($spell);
+
+dump($generateSynonyms('car'));
+
+array:5 [▼
+  0 => "automobile"
+  1 => "vehicle"
+  2 => "motorcar"
+  3 => "machine"
+  4 => "transport"
+]
+```
+
 ```php
 use Sourceability\Portal\Spell\Spell;
 
@@ -115,7 +139,7 @@ use Sourceability\Portal\Spell\Spell;
  */
 class MySpell implements Spell
 ```
-A spell is defined by its Input/Output types TInput and TOutput.
+A spell is defined by its Input/Output types `TInput` and `TOutput`.
 So for example, a spell that accepts a number and returns an array of string, would use `Spell<int, string<string>>`.
 
 ### `getSchema`

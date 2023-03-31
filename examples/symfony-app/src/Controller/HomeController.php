@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Portal\SummarizeSpell;
 use App\Portal\Summary;
 use Sourceability\Portal\Portal;
+use Sourceability\Portal\Spell\StaticSpell;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -37,6 +38,25 @@ class HomeController extends AbstractController
 
         // renderHome exists to make sure phpstan sees $summary as null|Summary
         return $this->renderHome($form, $summary);
+    }
+
+    #[Route('/synonyms')]
+    public function synonyms(Portal $portal): void
+    {
+        $spell = new StaticSpell(
+            schema: [
+                'type' => 'array',
+                'items' => [
+                    'type' => 'string',
+                ],
+            ],
+            prompt: 'Synonyms of {{ input }}'
+        );
+
+        /** @var callable(string): array<string> $generateSynonyms */
+        $generateSynonyms = $portal->callableFromSpell($spell);
+
+        dd($generateSynonyms('car'));
     }
 
     private function renderHome(FormInterface $form, ?Summary $summary): Response

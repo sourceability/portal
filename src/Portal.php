@@ -43,6 +43,17 @@ class Portal
         );
     }
 
+    /**
+     * @template TInput
+     * @template TOutput
+     * @param Spell<TInput, TOutput> $spell
+     * @return callable(TInput): TOutput
+     */
+    public function callableFromSpell(Spell $spell): callable
+    {
+        return fn (mixed $input): mixed => $this->cast($spell, $input)->value;
+    }
+
     public function transfer(mixed $promptSchema, string $prompt, string $schemaType = 'json-schema'): TransferResult
     {
         if (! is_string($promptSchema)) {

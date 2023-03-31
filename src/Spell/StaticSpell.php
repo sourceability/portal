@@ -17,8 +17,8 @@ class StaticSpell implements Spell
      */
     public function __construct(
         private readonly array $schema,
-        private readonly array $examples,
-        private readonly string $prompt
+        private readonly string $prompt,
+        private readonly array $examples = [],
     ) {
     }
 
