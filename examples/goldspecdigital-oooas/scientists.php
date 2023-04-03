@@ -26,6 +26,6 @@ $result = $portal->cast(
 );
 
 dump(
-    $result->prompt,
-    $result->value,
+    $result->getPrompt(),
+    $result->getValue(),
 );

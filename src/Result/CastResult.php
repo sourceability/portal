@@ -13,10 +13,33 @@ class CastResult
      * @param TOutput $value
      */
     public function __construct(
-        public readonly string $prompt,
-        public readonly string $completion,
-        public readonly mixed $value,
-        public readonly mixed $transferValue
+        private readonly string $prompt,
+        private readonly string $completion,
+        private readonly mixed $value,
+        private readonly mixed $transferValue
     ) {
+    }
+
+    public function getPrompt(): string
+    {
+        return $this->prompt;
+    }
+
+    public function getCompletion(): string
+    {
+        return $this->completion;
+    }
+
+    /**
+     * @return TOutput
+     */
+    public function getValue(): mixed
+    {
+        return $this->value;
+    }
+
+    public function getTransferValue(): mixed
+    {
+        return $this->transferValue;
     }
 }

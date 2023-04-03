@@ -24,7 +24,7 @@ class CustomJokeCommand extends Command
             'electronic components'
         );
 
-        $output->writeln($castResult->value);
+        $output->writeln($castResult->getValue());
 
         return 0;
     }

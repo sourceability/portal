@@ -35,11 +35,11 @@ class Portal
 
         return new CastResult(
             $prompt,
-            $portalResult->completion,
+            $portalResult->getCompletion(),
             $spell->transcribe(
-                $portalResult->value
+                $portalResult->getValue()
             ),
-            $portalResult->value
+            $portalResult->getValue()
         );
     }
 
@@ -51,7 +51,7 @@ class Portal
      */
     public function callableFromSpell(Spell $spell): callable
     {
-        return fn (mixed $input): mixed => $this->cast($spell, $input)->value;
+        return fn (mixed $input): mixed => $this->cast($spell, $input)->getValue();
     }
 
     public function transfer(mixed $promptSchema, string $prompt, string $schemaType = 'json-schema'): TransferResult

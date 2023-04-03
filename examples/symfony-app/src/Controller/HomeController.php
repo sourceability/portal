@@ -32,7 +32,7 @@ class HomeController extends AbstractController
 
             // is_string is required because SummarizeSpell TInput is string
             if (is_string($content)) {
-                $summary = $portal->cast($summarizeSpell, $content)->value;
+                $summary = $portal->cast($summarizeSpell, $content)->getValue();
             }
         }
 

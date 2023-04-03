@@ -141,19 +141,19 @@ class CastCommand extends Command
 
             if ($consoleOutput->isVerbose()) {
                 $io->title('Prompt:');
-                $io->block($castResult->prompt, null, 'bg=gray', ' ', true);
+                $io->block($castResult->getPrompt(), null, 'bg=gray', ' ', true);
             }
 
             if ($consoleOutput->isVerbose()) {
                 $io->title('Completion:');
-                $io->block($castResult->completion, null, 'bg=gray', ' ', true);
+                $io->block($castResult->getCompletion(), null, 'bg=gray', ' ', true);
             }
 
             $io->title('Completion Results:');
 
-            if ((is_countable($castResult->transferValue) ? count($castResult->transferValue) : 0) > 0) {
-                if (is_array($castResult->transferValue)
-                    && is_int(array_keys($castResult->transferValue)[0])
+            if ((is_countable($castResult->getTransferValue()) ? count($castResult->getTransferValue()) : 0) > 0) {
+                if (is_array($castResult->getTransferValue())
+                    && is_int(array_keys($castResult->getTransferValue())[0])
                 ) {
                     $table = new Table($consoleOutput);
                     $table->setStyle('box');
@@ -162,10 +162,10 @@ class CastCommand extends Command
                     if (is_array($schemaProperties)) {
                         $table->setHeaders(array_keys($schemaProperties));
                     }
-                    $table->setFooterTitle(sprintf('Total: %d', count($castResult->transferValue)));
+                    $table->setFooterTitle(sprintf('Total: %d', count($castResult->getTransferValue())));
 
                     $firstResult = true;
-                    foreach ($castResult->transferValue as $value) {
+                    foreach ($castResult->getTransferValue() as $value) {
                         assert(is_array($value));
 
                         if (! $firstResult) {
@@ -190,17 +190,17 @@ class CastCommand extends Command
                     }
                     $table->render();
                 } else {
-                    $value = $castResult->transferValue;
+                    $value = $castResult->getTransferValue();
                     $io->block(json_encode($value, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE) ?: '', null, 'bg=gray', ' ', true);
                 }
             } else {
-                $value = $castResult->transferValue;
+                $value = $castResult->getTransferValue();
                 $io->block(json_encode($value, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE) ?: '', null, 'bg=gray', ' ', true);
             }
 
             if ($consoleOutput->isVeryVerbose()) {
                 $io->title('Results:');
-                $io->block(var_export($castResult->value, true), null, 'bg=gray', ' ', true);
+                $io->block(var_export($castResult->getValue(), true), null, 'bg=gray', ' ', true);
             }
         }
 
