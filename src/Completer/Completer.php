@@ -6,5 +6,5 @@ namespace Sourceability\Portal\Completer;
 
 interface Completer
 {
-    public function complete(string $prompt): string;
+    public function complete(string $prompt): Completion;
 }

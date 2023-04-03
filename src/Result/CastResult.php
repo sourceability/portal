@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Sourceability\Portal\Result;
 
+use Sourceability\OpenAIClient\Pricing\ResponseCost;
+
 /**
  * @template TOutput
  */
@@ -16,7 +18,8 @@ class CastResult
         private readonly string $prompt,
         private readonly string $completion,
         private readonly mixed $value,
-        private readonly mixed $transferValue
+        private readonly mixed $transferValue,
+        private readonly ResponseCost $cost
     ) {
     }
 
@@ -41,5 +44,10 @@ class CastResult
     public function getTransferValue(): mixed
     {
         return $this->transferValue;
+    }
+
+    public function getCost(): ResponseCost
+    {
+        return $this->cost;
     }
 }

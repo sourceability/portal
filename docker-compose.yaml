@@ -6,6 +6,7 @@ services:
     build: .
     environment:
       - OPENAI_API_KEY
+      - PHP_EXTENSION_INTL=1
     volumes:
       - .:/usr/src/app:cached
 

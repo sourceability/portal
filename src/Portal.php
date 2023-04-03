@@ -39,7 +39,8 @@ class Portal
             $spell->transcribe(
                 $portalResult->getValue()
             ),
-            $portalResult->getValue()
+            $portalResult->getValue(),
+            $portalResult->getCost()
         );
     }
 
@@ -75,18 +76,19 @@ Use the following instructions to fill the JSON:
 PROMPT;
 
         $completion = $this->completer->complete($fullPrompt);
-        $completion = preg_replace('#^\s*```\S*|```\s*$#', '', trim($completion));
+        $completionText = preg_replace('#^\s*```\S*|```\s*$#', '', trim($completion->getCompletion()));
 
-        if ($completion === null) {
+        if ($completionText === null) {
             throw new Exception('No completion');
         }
 
-        $completionValue = json_decode($completion, true, 512, JSON_THROW_ON_ERROR);
+        $completionValue = json_decode($completionText, true, 512, JSON_THROW_ON_ERROR);
 
         return new TransferResult(
             $prompt,
-            $completion,
-            $completionValue
+            $completionText,
+            $completionValue,
+            $completion->getCost()
         );
     }
 }

@@ -198,6 +198,14 @@ class CastCommand extends Command
                 $io->block(json_encode($value, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE) ?: '', null, 'bg=gray', ' ', true);
             }
 
+            if ($consoleOutput->isVerbose()) {
+                $io->info(join(' - ', [
+                    'Total: ' . $castResult->getCost()->getTotal()->formatTo('en_US'),
+                    'Prompt: ' . $castResult->getCost()->getPrompt()->formatTo('en_US'),
+                    'Completion: ' . $castResult->getCost()->getCompletion()->formatTo('en_US'),
+                ]));
+            }
+
             if ($consoleOutput->isVeryVerbose()) {
                 $io->title('Results:');
                 $io->block(var_export($castResult->getValue(), true), null, 'bg=gray', ' ', true);

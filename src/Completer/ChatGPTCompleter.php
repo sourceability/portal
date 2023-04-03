@@ -8,6 +8,7 @@ use Sourceability\OpenAIClient\Client;
 use Sourceability\OpenAIClient\Generated\Model\ChatCompletionRequestMessage;
 use Sourceability\OpenAIClient\Generated\Model\CreateChatCompletionRequest;
 use Sourceability\OpenAIClient\Generated\Model\CreateChatCompletionResponse;
+use Sourceability\OpenAIClient\Pricing\ResponseCostCalculator;
 use Sourceability\Portal\Exception\Exception;
 
 class ChatGPTCompleter implements Completer
@@ -16,7 +17,8 @@ class ChatGPTCompleter implements Completer
 
     public function __construct(
         private readonly Client $openAiClient,
-        ?CreateChatCompletionRequest $request = null
+        ?CreateChatCompletionRequest $request = null,
+        private readonly ResponseCostCalculator $responseCostCalculator = new ResponseCostCalculator()
     ) {
         if ($request === null) {
             $request = new CreateChatCompletionRequest(
@@ -28,7 +30,7 @@ class ChatGPTCompleter implements Completer
         $this->request = $request;
     }
 
-    public function complete(string $prompt): string
+    public function complete(string $prompt): Completion
     {
         $chatCompletionRequest = clone $this->request;
         $chatCompletionRequest->setMessages([
@@ -44,6 +46,9 @@ class ChatGPTCompleter implements Completer
             throw new Exception('createChatCompletion did not return a ' . CreateChatCompletionResponse::class);
         }
 
-        return $response->getChoices()[0]->getMessage()->getContent();
+        return new Completion(
+            $response->getChoices()[0]->getMessage()->getContent(),
+            $this->responseCostCalculator->calculate($response)
+        );
     }
 }
