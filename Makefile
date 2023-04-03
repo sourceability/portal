@@ -2,6 +2,9 @@
 .DEFAULT_GOAL := help
 SHELL = /bin/bash
 
+# https://stackoverflow.com/a/23324703
+ROOT_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+
 ifneq (, $(shell which docker))
 	EXEC_PHP ?= docker-compose run php
 else
@@ -47,6 +50,8 @@ pre-commit: ecs rector phpstan phpunit
 	@read -sp 'Enter your OpenAI API Key (to save in gitignore .env): ' OPENAI_API_KEY ; \
 	echo "OPENAI_API_KEY=$${OPENAI_API_KEY}" > .env
 
-vendor: composer.json composer.lock
+COMPOSER_FILES := $(wildcard $(ROOT_DIR)/composer.*)
+
+vendor: $(COMPOSER_FILES)
 	$(EXEC_PHP) composer install
 	@touch $@ # Force directory mtime refresh
