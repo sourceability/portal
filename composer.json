@@ -1,5 +1,7 @@
 {
     "name": "sourceability/portal",
+    "description": "A CLI, PHP Library and Symfony Bundle that helps getting structured data out from GPT.",
+    "keywords": ["php", "OpenAI", "GPT", "json-schema", "symfony", "structured"],
     "license": "MIT",
     "type": "library",
     "require": {
