@@ -1,5 +1,6 @@
 {
     "name": "sourceability/portal",
+    "license": "MIT",
     "type": "library",
     "require": {
         "ext-json": "*",
