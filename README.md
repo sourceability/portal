@@ -28,6 +28,10 @@ Completion Results:
 }
 ```
 
+⚠️ Note that this library is experimental, and the API will change.
+
+You are welcome to contribute by submitting issues, ideas, PRs, etc 🙂.
+
 ## Installation
 
 ```
